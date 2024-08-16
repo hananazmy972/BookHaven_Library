@@ -39,7 +39,7 @@ namespace BookHaven_Library
         public List<Object> GetData_Connected()
         {
             List<Object> borrowings = new List<Object>();
-            string query = $@"SELECT B.BorrowID , Concat(M.FirstName, M.LastName) AS MemberName ,BK.Title, B.BorrowDate,B.DueDate ,B.ReturnDate
+            string query = $@"SELECT B.BorrowID , Concat(M.FirstName,' ', M.LastName) AS MemberName ,BK.Title, B.BorrowDate,B.DueDate ,B.ReturnDate
                              FROM Borrowing B 
 	                         JOIN Member M ON B.MemberID = M.MemberID
 	                         JOIN Book BK ON B.BookID = BK.BookID";
@@ -67,6 +67,13 @@ namespace BookHaven_Library
             }
 
             return borrowings;
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            AddBorrowingForm borrow = new AddBorrowingForm();
+            borrow.ShowDialog();    
+            this.Hide();    
         }
     }
 }

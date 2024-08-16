@@ -151,6 +151,12 @@ namespace BookHaven_Library
                     DataTable table = new DataTable();
                     table.Load(adpt);
 
+                    // Add a placeholder row for "Select Category"
+                    DataRow placeholderRow = table.NewRow();
+                    placeholderRow["CategoryID"] = 0; // Use 0 as a special value
+                    placeholderRow["CategoryName"] = "Select Category";
+                    table.Rows.InsertAt(placeholderRow, 0);
+
                     Category_txtBox.DisplayMember = "CategoryName"; // What the user sees
                     Category_txtBox.ValueMember = "CategoryID";    // What you want to get
                     Category_txtBox.DataSource = table;
@@ -159,9 +165,11 @@ namespace BookHaven_Library
                     Category_txtBox2.ValueMember = "CategoryID";    // What you want to get
                     Category_txtBox2.DataSource = table;
 
-                    Category_txtBox.Text = "Select Category";
-                    Category_txtBox2.Text = "Select Category";
+                    Category_txtBox2.SelectedIndex = 0;
 
+                    // Set the selected index to the placeholder
+                    Category_txtBox.SelectedIndex = 0;
+                    Category_txtBox2.SelectedIndex = 0;
 
                     connection.Close();
                 }
@@ -182,7 +190,7 @@ namespace BookHaven_Library
             string idText = SearchID.Text;
             string nameText = SearchName.Text;
 
-            if (categoryId.HasValue)
+            if (categoryId.HasValue && categoryId.Value != 0)
             {
                 query += " AND CategoryID = @CategoryID";
                 parameters.Add(new SqlParameter("@CategoryID", categoryId.Value));

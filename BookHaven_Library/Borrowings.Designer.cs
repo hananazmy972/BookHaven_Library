@@ -56,7 +56,7 @@
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(68, 376);
+            btnReturn.Location = new Point(68, 335);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(94, 65);
             btnReturn.TabIndex = 22;
@@ -71,6 +71,7 @@
             btnNew.TabIndex = 21;
             btnNew.Text = "New Borrowing";
             btnNew.UseVisualStyleBackColor = true;
+            btnNew.Click += btnNew_Click;
             // 
             // btnRefresh
             // 
