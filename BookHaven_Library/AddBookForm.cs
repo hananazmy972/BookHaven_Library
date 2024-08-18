@@ -52,6 +52,8 @@ namespace BookHaven_Library
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
+            if (!ValidateInput())
+                return;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string comm = @$"INSERT INTO Book (Title ,Author ,ISBN ,PublicationYear ,CategoryID ,TotalCopies, AvailableCopies) 
@@ -68,12 +70,52 @@ namespace BookHaven_Library
                     command.Parameters.AddWithValue("@AvailableCopies", Av_copies_txtBox.Text);
 
                     connection.Open();
-
                     int rows = command.ExecuteNonQuery();
                     MessageBox.Show($"Updated!{rows}");
+                    this.Hide();
                
                 }
             }
         }
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(title_txtBox.Text))
+            {
+                MessageBox.Show("Title cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(author_txtBox.Text))
+            {
+                MessageBox.Show("Author cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(isbn_txtBox.Text))
+            {
+                MessageBox.Show("ISBN cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (!int.TryParse(year_txtBox.Text, out int year) || year <= 0)
+            {
+                MessageBox.Show("Please enter a valid publication year.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if ((int)Category_txtBox.SelectedValue == 0)
+            {
+                MessageBox.Show("Please select a valid category.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (!int.TryParse(copies_txtBox.Text, out int copies) || copies < 0)
+            {
+                MessageBox.Show("Total copies must be a positive integer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (!int.TryParse(Av_copies_txtBox.Text, out int avCopies) || avCopies < 0 || avCopies > copies)
+            {
+                MessageBox.Show("Available copies must be a positive integer and cannot exceed total copies.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
     }
 }

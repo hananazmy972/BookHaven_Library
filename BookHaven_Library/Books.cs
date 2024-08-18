@@ -28,7 +28,7 @@ namespace BookHaven_Library
 
         private void Books_Load(object sender, EventArgs e)
         {
-            fill_compo();
+            FillCategoryComboBox();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -46,6 +46,7 @@ namespace BookHaven_Library
             if (book != null && book.BookID != 0)
             {
                 Update_Book(book);
+              
             }
             else
             {
@@ -60,18 +61,30 @@ namespace BookHaven_Library
             if (book != null && book.BookID != 0)
             {
                 DeleteBook(book);
+                LoadData(); // Reload the data to refresh the DataGridView
+                ClearInputs(); // Clear input fields
+
             }
             else
             {
                 MessageBox.Show("Please select a record to delete.");
             }
-            LoadData();
+          
+        }
+        private void ClearInputs()
+        {
+            title_txtBox.Text = string.Empty;
+            author_txtBox.Text = string.Empty;
+            isbn_txtBox.Text = string.Empty;
+            year_txtBox.Text = string.Empty;
+            Category_txtBox1.SelectedIndex = 0; // Reset to the placeholder value
+            copies_txtBox.Text = string.Empty;
+            Av_copies_txtBox.Text = string.Empty;
+            id_txtBox.Text = string.Empty;
+
+            // Optionally, clear any additional fields here
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
 
         private void Back_Home_Click(object sender, EventArgs e)
         {
@@ -103,7 +116,7 @@ namespace BookHaven_Library
             author_txtBox.DataBindings.Add("Text", source, "Author");
             isbn_txtBox.DataBindings.Add("Text", source, "ISBN");
             year_txtBox.DataBindings.Add("Text", source, "PublicationYear");
-            Category_txtBox.DataBindings.Add("SelectedValue", source, "CategoryID");
+            Category_txtBox1.DataBindings.Add("SelectedValue", source, "CategoryID");
             copies_txtBox.DataBindings.Add("Text", source, "TotalCopies");
             Av_copies_txtBox.DataBindings.Add("Text", source, "AvailableCopies");
             id_txtBox.DataBindings.Add("Text", source, "BookID");
@@ -116,6 +129,7 @@ namespace BookHaven_Library
             {
                 BookGridView.Rows[0].Selected = true;
             }
+            
         }
 
         private void ClearBindings()
@@ -124,7 +138,7 @@ namespace BookHaven_Library
             author_txtBox.DataBindings.Clear();
             isbn_txtBox.DataBindings.Clear();
             year_txtBox.DataBindings.Clear();
-            Category_txtBox.DataBindings.Clear();
+            Category_txtBox1.DataBindings.Clear();
             copies_txtBox.DataBindings.Clear();
             Av_copies_txtBox.DataBindings.Clear();
             id_txtBox.DataBindings.Clear();
@@ -139,7 +153,7 @@ namespace BookHaven_Library
             }
         }
 
-        private void fill_compo()
+        private void FillCategoryComboBox()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -157,18 +171,18 @@ namespace BookHaven_Library
                     placeholderRow["CategoryName"] = "Select Category";
                     table.Rows.InsertAt(placeholderRow, 0);
 
-                    Category_txtBox.DisplayMember = "CategoryName"; // What the user sees
-                    Category_txtBox.ValueMember = "CategoryID";    // What you want to get
-                    Category_txtBox.DataSource = table;
+                    Category_txtBox1.DisplayMember = "CategoryName"; // What the user sees
+                    Category_txtBox1.ValueMember = "CategoryID";    // What you want to get
+                    Category_txtBox1.DataSource = table;
 
-                    Category_txtBox2.DisplayMember = "CategoryName"; // What the user sees
-                    Category_txtBox2.ValueMember = "CategoryID";    // What you want to get
+                    Category_txtBox2.DisplayMember = "CategoryName"; 
+                    Category_txtBox2.ValueMember = "CategoryID";   
                     Category_txtBox2.DataSource = table;
 
                     Category_txtBox2.SelectedIndex = 0;
 
                     // Set the selected index to the placeholder
-                    Category_txtBox.SelectedIndex = 0;
+                    Category_txtBox1.SelectedIndex = 0;
                     Category_txtBox2.SelectedIndex = 0;
 
                     connection.Close();
@@ -185,7 +199,7 @@ namespace BookHaven_Library
 
             List<Book> books = new List<Book>();
             string query = "SELECT BookID, Title, Author, ISBN, PublicationYear, CategoryID, TotalCopies, AvailableCopies FROM Book WHERE 1=1";
-           
+
             List<SqlParameter> parameters = new List<SqlParameter>();
             string idText = SearchID.Text;
             string nameText = SearchName.Text;
@@ -238,27 +252,49 @@ namespace BookHaven_Library
 
             return books;
         }
-
+        //Delete Book 
         private void DeleteBook(Book book)
         {
+            if (!ValidateInput())
+                return;
+
             string cmd = "DELETE FROM Book WHERE BookID = @BookID";
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(cmd, conn))
             {
                 command.Parameters.AddWithValue("@BookID", book.BookID);
-                conn.Open();
 
-                int rows = command.ExecuteNonQuery();
-                MessageBox.Show($"Deleted! {rows} row(s) affected.");
+                try
+                {
+                    conn.Open();
+                    int rows = command.ExecuteNonQuery();
+                    MessageBox.Show($"Deleted! {rows} row(s) affected.");
+                }
+                catch (SqlException ex)
+                {
+                    // Handle foreign key constraint violation (SQL Server error code 547)
+                    if (ex.Number == 547)
+                    {
+                        MessageBox.Show("Cannot delete this book because it is referenced by another record.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
 
+        //Update Book
         public void Update_Book(Book book)
         {
+            if (!ValidateInput())
+                return;
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string comm = @$"UPDATE Book SET Title = @Title, Author = @Author, ISBN = @ISBN, PublicationYear = @PublicationYear, CategoryID = @CategoryID, TotalCopies = @TotalCopies, AvailableCopies = @AvailableCopies
-                                WHERE BookID = @BookID;";
+                        WHERE BookID = @BookID;";
 
                 using (SqlCommand command = new SqlCommand(comm, connection))
                 {
@@ -271,36 +307,96 @@ namespace BookHaven_Library
                     command.Parameters.AddWithValue("@AvailableCopies", book.AvailableCopies);
                     command.Parameters.AddWithValue("@BookID", book.BookID);
 
-                    connection.Open();
-
-                    int rows = command.ExecuteNonQuery();
-                    MessageBox.Show($"Updated! {rows} row(s) affected.");
+                    try
+                    {
+                        connection.Open();
+                        int rows = command.ExecuteNonQuery();
+                        MessageBox.Show($"Updated! {rows} row(s) affected.");
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Handle foreign key constraint violation (SQL Server error code 547)
+                        if (ex.Number == 547)
+                        {
+                            MessageBox.Show("Cannot update this book because it is referenced by another record.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
         }
 
+
+        //Filter books by category
         private void Category_txtBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             int categorySelected = Convert.ToInt32(Category_txtBox2.SelectedValue);
             BookGridView.DataSource = GetData_Connected(categorySelected);
         }
 
-
+        //Search By ID
         private void SearchID_TextChanged(object sender, EventArgs e)
         {
             BookGridView.DataSource = GetData_Connected();
         }
-
+        //Search By Title
         private void SearchName_TextChanged(object sender, EventArgs e)
         {
             BookGridView.DataSource = GetData_Connected();
 
         }
-
+        //Extra for Search
         private void btnSearch_Click(object sender, EventArgs e)
         {
             BookGridView.DataSource = GetData_Connected();
 
         }
+
+        //Validation
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(title_txtBox.Text))
+            {
+                MessageBox.Show("Title cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(author_txtBox.Text))
+            {
+                MessageBox.Show("Author cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(isbn_txtBox.Text))
+            {
+                MessageBox.Show("ISBN cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                return false;
+            }
+            if (!int.TryParse(year_txtBox.Text, out int year) || year <= 0 || year > 2024)
+            {
+                MessageBox.Show("Please enter a valid publication year.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                return false;
+            }
+            if ((int)Category_txtBox1.SelectedValue == 0)
+            {
+                MessageBox.Show("Please select a valid category.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                return false;
+            }
+            if (!int.TryParse(copies_txtBox.Text, out int copies) || copies < 0)
+            {
+                MessageBox.Show("Total copies must be a positive integer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (!int.TryParse(Av_copies_txtBox.Text, out int avCopies) || avCopies < 0 || avCopies > copies)
+            {
+                MessageBox.Show("Available copies must be a positive integer and cannot exceed total copies.", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
     }
 }
+
+

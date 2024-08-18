@@ -41,7 +41,7 @@
             btnDelete = new Button();
             ptnUpdate = new Button();
             btnAdd = new Button();
-            Category_txtBox = new ComboBox();
+            Category_txtBox1 = new ComboBox();
             id_txtBox = new TextBox();
             label8 = new Label();
             BookGridView = new DataGridView();
@@ -65,7 +65,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.BackColor = Color.AntiqueWhite;
             panel1.Controls.Add(label10);
             panel1.Controls.Add(Name);
             panel1.Controls.Add(SearchName);
@@ -77,7 +77,7 @@
             panel1.Controls.Add(btnDelete);
             panel1.Controls.Add(ptnUpdate);
             panel1.Controls.Add(btnAdd);
-            panel1.Controls.Add(Category_txtBox);
+            panel1.Controls.Add(Category_txtBox1);
             panel1.Controls.Add(id_txtBox);
             panel1.Controls.Add(label8);
             panel1.Controls.Add(BookGridView);
@@ -95,14 +95,14 @@
             panel1.Controls.Add(label1);
             panel1.Location = new Point(62, -10);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1057, 552);
+            panel1.Size = new Size(1057, 608);
             panel1.TabIndex = 0;
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(509, 102);
+            label10.Location = new Point(524, 115);
             label10.Name = "label10";
             label10.Size = new Size(33, 20);
             label10.TabIndex = 28;
@@ -112,7 +112,7 @@
             // 
             Name.AutoSize = true;
             Name.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Name.Location = new Point(657, 102);
+            Name.Location = new Point(677, 115);
             Name.Name = "Name";
             Name.Size = new Size(48, 20);
             Name.TabIndex = 27;
@@ -120,7 +120,7 @@
             // 
             // SearchName
             // 
-            SearchName.Location = new Point(722, 97);
+            SearchName.Location = new Point(742, 112);
             SearchName.Name = "SearchName";
             SearchName.Size = new Size(86, 27);
             SearchName.TabIndex = 26;
@@ -128,7 +128,7 @@
             // 
             // SearchID
             // 
-            SearchID.Location = new Point(548, 97);
+            SearchID.Location = new Point(572, 112);
             SearchID.Name = "SearchID";
             SearchID.Size = new Size(87, 27);
             SearchID.TabIndex = 25;
@@ -136,19 +136,20 @@
             // 
             // btnSearch
             // 
+            btnSearch.BackColor = Color.SeaShell;
             btnSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
             btnSearch.ImageAlign = ContentAlignment.TopLeft;
-            btnSearch.Location = new Point(470, 94);
+            btnSearch.Location = new Point(471, 109);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(33, 32);
             btnSearch.TabIndex = 24;
-            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
             // 
             // Av_copies_txtBox
             // 
-            Av_copies_txtBox.Location = new Point(143, 440);
+            Av_copies_txtBox.Location = new Point(182, 496);
             Av_copies_txtBox.Name = "Av_copies_txtBox";
             Av_copies_txtBox.Size = new Size(125, 27);
             Av_copies_txtBox.TabIndex = 23;
@@ -156,19 +157,19 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(14, 443);
+            label9.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(19, 495);
             label9.Name = "label9";
-            label9.Size = new Size(123, 20);
+            label9.Size = new Size(157, 25);
             label9.TabIndex = 22;
-            label9.Text = "Availabe Copies ";
+            label9.Text = "Availabe Copies :";
             // 
             // Category_txtBox2
             // 
-            Category_txtBox2.BackColor = SystemColors.ScrollBar;
+            Category_txtBox2.BackColor = Color.White;
             Category_txtBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Category_txtBox2.FormattingEnabled = true;
-            Category_txtBox2.Location = new Point(873, 99);
+            Category_txtBox2.Location = new Point(903, 111);
             Category_txtBox2.Name = "Category_txtBox2";
             Category_txtBox2.Size = new Size(141, 28);
             Category_txtBox2.TabIndex = 21;
@@ -177,49 +178,57 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(166, 491);
+            btnDelete.BackColor = Color.DimGray;
+            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDelete.ForeColor = SystemColors.ButtonHighlight;
+            btnDelete.Location = new Point(198, 554);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(71, 36);
+            btnDelete.Size = new Size(93, 41);
             btnDelete.TabIndex = 19;
             btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // ptnUpdate
             // 
-            ptnUpdate.Location = new Point(66, 491);
+            ptnUpdate.BackColor = Color.DimGray;
+            ptnUpdate.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ptnUpdate.ForeColor = Color.Transparent;
+            ptnUpdate.Location = new Point(64, 554);
             ptnUpdate.Name = "ptnUpdate";
-            ptnUpdate.Size = new Size(71, 36);
+            ptnUpdate.Size = new Size(93, 41);
             ptnUpdate.TabIndex = 18;
             ptnUpdate.Text = "Update";
-            ptnUpdate.UseVisualStyleBackColor = true;
+            ptnUpdate.UseVisualStyleBackColor = false;
             ptnUpdate.Click += ptnUpdate_Click;
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = Color.White;
             btnAdd.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdd.Image = (Image)resources.GetObject("btnAdd.Image");
             btnAdd.ImageAlign = ContentAlignment.TopCenter;
-            btnAdd.Location = new Point(341, 94);
+            btnAdd.Location = new Point(360, 109);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(113, 32);
+            btnAdd.Size = new Size(76, 32);
             btnAdd.TabIndex = 17;
-            btnAdd.Text = "ADD New Book";
+            btnAdd.Text = "ADD ";
             btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
-            // Category_txtBox
+            // Category_txtBox1
             // 
-            Category_txtBox.FormattingEnabled = true;
-            Category_txtBox.Location = new Point(143, 202);
-            Category_txtBox.Name = "Category_txtBox";
-            Category_txtBox.Size = new Size(125, 28);
-            Category_txtBox.TabIndex = 16;
+            Category_txtBox1.FormattingEnabled = true;
+            Category_txtBox1.Location = new Point(182, 248);
+            Category_txtBox1.Name = "Category_txtBox1";
+            Category_txtBox1.Size = new Size(125, 28);
+            Category_txtBox1.TabIndex = 16;
             // 
             // id_txtBox
             // 
-            id_txtBox.Location = new Point(143, 109);
+            id_txtBox.BackColor = SystemColors.ButtonHighlight;
+            id_txtBox.Location = new Point(182, 150);
             id_txtBox.Name = "id_txtBox";
             id_txtBox.ReadOnly = true;
             id_txtBox.Size = new Size(125, 27);
@@ -228,32 +237,34 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(48, 109);
+            label8.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(32, 150);
             label8.Name = "label8";
-            label8.Size = new Size(25, 20);
+            label8.Size = new Size(90, 25);
             label8.TabIndex = 14;
-            label8.Text = "ID";
+            label8.Text = "Book ID :";
             // 
             // BookGridView
             // 
+            BookGridView.BackgroundColor = SystemColors.ButtonHighlight;
             BookGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            BookGridView.Location = new Point(341, 131);
+            BookGridView.GridColor = Color.White;
+            BookGridView.Location = new Point(350, 147);
             BookGridView.Name = "BookGridView";
             BookGridView.RowHeadersWidth = 51;
-            BookGridView.Size = new Size(688, 387);
+            BookGridView.Size = new Size(694, 427);
             BookGridView.TabIndex = 13;
             // 
             // copies_txtBox
             // 
-            copies_txtBox.Location = new Point(143, 388);
+            copies_txtBox.Location = new Point(182, 447);
             copies_txtBox.Name = "copies_txtBox";
             copies_txtBox.Size = new Size(125, 27);
             copies_txtBox.TabIndex = 12;
             // 
             // year_txtBox
             // 
-            year_txtBox.Location = new Point(143, 341);
+            year_txtBox.Location = new Point(182, 396);
             year_txtBox.Name = "year_txtBox";
             year_txtBox.Size = new Size(125, 27);
             year_txtBox.TabIndex = 11;
@@ -261,26 +272,26 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(34, 395);
+            label7.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(22, 449);
             label7.Name = "label7";
-            label7.Size = new Size(59, 20);
+            label7.Size = new Size(125, 25);
             label7.TabIndex = 10;
-            label7.Text = "Copies ";
+            label7.Text = "Total Copies :";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(36, 341);
+            label6.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(22, 398);
             label6.Name = "label6";
-            label6.Size = new Size(39, 20);
+            label6.Size = new Size(154, 25);
             label6.TabIndex = 9;
-            label6.Text = "Year";
+            label6.Text = "PublicationYear :";
             // 
             // isbn_txtBox
             // 
-            isbn_txtBox.Location = new Point(143, 295);
+            isbn_txtBox.Location = new Point(182, 348);
             isbn_txtBox.Name = "isbn_txtBox";
             isbn_txtBox.Size = new Size(125, 27);
             isbn_txtBox.TabIndex = 8;
@@ -288,16 +299,16 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(36, 295);
+            label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(32, 348);
             label5.Name = "label5";
-            label5.Size = new Size(48, 20);
+            label5.Size = new Size(64, 25);
             label5.TabIndex = 7;
-            label5.Text = "ISBN ";
+            label5.Text = "ISBN :";
             // 
             // author_txtBox
             // 
-            author_txtBox.Location = new Point(143, 248);
+            author_txtBox.Location = new Point(182, 300);
             author_txtBox.Name = "author_txtBox";
             author_txtBox.Size = new Size(125, 27);
             author_txtBox.TabIndex = 6;
@@ -305,16 +316,16 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(34, 248);
+            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(32, 299);
             label4.Name = "label4";
-            label4.Size = new Size(50, 20);
+            label4.Size = new Size(71, 25);
             label4.TabIndex = 5;
-            label4.Text = "Autor";
+            label4.Text = "Autor :";
             // 
             // title_txtBox
             // 
-            title_txtBox.Location = new Point(143, 155);
+            title_txtBox.Location = new Point(182, 198);
             title_txtBox.Name = "title_txtBox";
             title_txtBox.Size = new Size(125, 27);
             title_txtBox.TabIndex = 4;
@@ -322,39 +333,39 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(42, 155);
+            label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(32, 197);
             label3.Name = "label3";
-            label3.Size = new Size(40, 20);
+            label3.Size = new Size(109, 25);
             label3.TabIndex = 3;
-            label3.Text = "Title";
+            label3.Text = "Book Title :";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(34, 202);
+            label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(32, 247);
             label2.Name = "label2";
-            label2.Size = new Size(73, 20);
+            label2.Size = new Size(100, 25);
             label2.TabIndex = 1;
-            label2.Text = "Category";
+            label2.Text = "Category :";
             // 
             // label1
             // 
-            label1.Font = new Font("Century", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Century", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaptionText;
-            label1.Location = new Point(415, 22);
+            label1.Location = new Point(334, 39);
             label1.Name = "label1";
-            label1.Size = new Size(259, 40);
+            label1.Size = new Size(325, 40);
             label1.TabIndex = 0;
-            label1.Text = "Manage Books";
+            label1.Text = "Book Management";
             // 
             // Back_Home
             // 
             Back_Home.Image = (Image)resources.GetObject("Back_Home.Image");
-            Back_Home.Location = new Point(-2, 12);
+            Back_Home.Location = new Point(3, 12);
             Back_Home.Name = "Back_Home";
-            Back_Home.Size = new Size(58, 57);
+            Back_Home.Size = new Size(53, 57);
             Back_Home.TabIndex = 1;
             Back_Home.TabStop = false;
             Back_Home.Click += Back_Home_Click;
@@ -363,7 +374,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1118, 534);
+            BackColor = Color.DarkRed;
+            ClientSize = new Size(1118, 597);
             Controls.Add(Back_Home);
             Controls.Add(panel1);
             Text = "Books";
@@ -394,7 +406,7 @@
         private Button btnDelete;
         private Button ptnUpdate;
         private Button btnAdd;
-        private ComboBox Category_txtBox;
+        private ComboBox Category_txtBox1;
         private TextBox id_txtBox;
         private Label label8;
         private ComboBox Category_txtBox2;

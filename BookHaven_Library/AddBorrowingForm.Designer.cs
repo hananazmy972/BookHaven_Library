@@ -42,19 +42,22 @@
             // 
             // btnCheckOut
             // 
-            btnCheckOut.BackColor = SystemColors.ActiveCaption;
-            btnCheckOut.Location = new Point(528, 167);
+            btnCheckOut.BackColor = Color.Gray;
+            btnCheckOut.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCheckOut.ForeColor = SystemColors.ButtonFace;
+            btnCheckOut.Location = new Point(172, 452);
             btnCheckOut.Name = "btnCheckOut";
-            btnCheckOut.Size = new Size(94, 102);
+            btnCheckOut.Size = new Size(163, 48);
             btnCheckOut.TabIndex = 57;
             btnCheckOut.Text = "Check Out";
             btnCheckOut.UseVisualStyleBackColor = false;
+            btnCheckOut.Click += btnCheckOut_Click;
             // 
             // label1
             // 
             label1.Font = new Font("Century", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaptionText;
-            label1.Location = new Point(232, 26);
+            label1.Location = new Point(124, 22);
             label1.Name = "label1";
             label1.Size = new Size(304, 40);
             label1.TabIndex = 56;
@@ -108,6 +111,7 @@
             // 
             // BorrowdateTimePicker
             // 
+            BorrowdateTimePicker.Enabled = false;
             BorrowdateTimePicker.Format = DateTimePickerFormat.Short;
             BorrowdateTimePicker.Location = new Point(217, 249);
             BorrowdateTimePicker.Name = "BorrowdateTimePicker";
@@ -126,6 +130,7 @@
             // 
             // DuedateTimePicker
             // 
+            DuedateTimePicker.Enabled = false;
             DuedateTimePicker.Format = DateTimePickerFormat.Short;
             DuedateTimePicker.Location = new Point(217, 319);
             DuedateTimePicker.Name = "DuedateTimePicker";
@@ -136,8 +141,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.InactiveCaption;
-            ClientSize = new Size(702, 386);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(534, 571);
             Controls.Add(DuedateTimePicker);
             Controls.Add(label5);
             Controls.Add(BorrowdateTimePicker);

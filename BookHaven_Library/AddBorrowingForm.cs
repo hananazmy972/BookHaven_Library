@@ -1,5 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using BookHaven_Library.Models;
+using Microsoft.Data.SqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,7 +37,7 @@ namespace BookHaven_Library
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection)) 
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     SqlDataReader adpt = command.ExecuteReader();
                     DataTable table = new DataTable();
@@ -48,14 +50,14 @@ namespace BookHaven_Library
 
                 }
             }
-        }        
+        }
         public void fill_Book()
         {
             string query = @$"SELECT BookID , Title FROM Book ";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection)) 
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     SqlDataReader adpt = command.ExecuteReader();
                     DataTable table = new DataTable();
@@ -76,5 +78,105 @@ namespace BookHaven_Library
             fill_Member();
             fill_Book();
         }
+
+        private void btnCheckOut_Click(object sender, EventArgs e)
+        {
+            if (!ValidateInput())
+                return;
+
+            int selectedBookID = (int)BookComboBox.SelectedValue;
+            int selectedMemberID = (int)MemberComboBox.SelectedValue;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                //Query 1: Check Available Copies
+                string query1 = "SELECT AvailableCopies FROM Book WHERE BookID = @BookID";
+                SqlCommand cmd1 = new SqlCommand(query1, connection);
+                cmd1.Parameters.AddWithValue("@BookID", selectedBookID);
+                int availableCopies = (int)cmd1.ExecuteScalar();
+
+                //Query 2: Check if the member already borrowed the book
+                string query2 = "SELECT COUNT(*) FROM Borrowing WHERE MemberID = @MemberID AND BookID = @BookID AND ReturnDate IS NULL";
+                SqlCommand cmd2 = new SqlCommand(query2, connection);
+                cmd2.Parameters.AddWithValue("@MemberID", selectedMemberID);
+                cmd2.Parameters.AddWithValue("@BookID", selectedBookID);
+                int existingBorrowCount = (int)cmd2.ExecuteScalar();
+
+                if (availableCopies > 0 && existingBorrowCount == 0)
+                {
+                    // Add a new borrowing record
+                    Borrowing newBorrowing = new Borrowing
+                    {
+                        MemberID = selectedMemberID,
+                        BookID = selectedBookID,
+                        BorrowDate = BorrowdateTimePicker.Value,
+                        DueDate = DuedateTimePicker.Value,
+                        ReturnDate = null
+                    };
+
+                    add_Borrow(newBorrowing);
+                    MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (availableCopies == 0)
+                {
+                    MessageBox.Show("No available copies of this book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (existingBorrowCount > 0)
+                {
+                    MessageBox.Show("This member has already borrowed this book and hasn't returned it yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                connection.Close();
+            }
+        }
+
+        private bool ValidateInput()
+        {
+            if (MemberComboBox.SelectedIndex == -1 || MemberComboBox.Text == "Select Member")
+            {
+                MessageBox.Show("Please select a valid member.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (BookComboBox.SelectedIndex == -1 || BookComboBox.Text == "Select Book")
+            {
+                MessageBox.Show("Please select a valid book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void add_Borrow(Borrowing borrowing)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO Borrowing (MemberID, BookID, BorrowDate, DueDate) VALUES (@MemberID, @BookID, @BorrowDate, @DueDate)";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@MemberID", borrowing.MemberID);
+                command.Parameters.AddWithValue("@BookID", borrowing.BookID);
+                command.Parameters.AddWithValue("@BorrowDate", borrowing.BorrowDate);
+                command.Parameters.AddWithValue("@DueDate", borrowing.DueDate);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+
+                // Update the available copies in the Book table
+                string updateCopiesQuery = "UPDATE Book SET AvailableCopies = AvailableCopies - 1 WHERE BookID = @BookID";
+                SqlCommand updateCopiesCommand = new SqlCommand(updateCopiesQuery, connection);
+                updateCopiesCommand.Parameters.AddWithValue("@BookID", borrowing.BookID);
+                updateCopiesCommand.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
+            // Trigger the DataUpdated event to refresh the main form data
+            DataUpdated?.Invoke();
+        }
+
+
     }
 }

@@ -29,6 +29,7 @@ namespace BookHaven_Library
             using (AddMemberForm addMemeberForm = new AddMemberForm())
             {
                 addMemeberForm.ShowDialog(); // Show the form as a modal dialog
+                LoadData();
             }
         }
 
@@ -45,6 +46,7 @@ namespace BookHaven_Library
             if (member != null && member.MemberID != 0)
             {
                 Delete_Member(member);
+                LoadData();
             }
             else
             {
@@ -57,6 +59,7 @@ namespace BookHaven_Library
             if (member != null && member.MemberID != 0)
             {
                 Update_Member(member);
+                LoadData();
             }
             else
             {
@@ -68,12 +71,20 @@ namespace BookHaven_Library
         public List<Member> GetData_Connected()
         {
             List<Member> members = new List<Member>();
-            string query = "SELECT MemberID, FirstName , LastName , Email , PhoneNumber , JoinDate  FROM Member";
+            string query = "SELECT MemberID, FirstName , LastName , Email , PhoneNumber , JoinDate  FROM Member WHERE 1=1";
             List<SqlParameter> parameters = new List<SqlParameter>();
+            string nameText = SearchName.Text;
+
+            if (!string.IsNullOrEmpty(nameText))
+            {
+                query += " AND FirstName LIKE @nameText";
+                parameters.Add(new SqlParameter("@nameText", "%" + nameText + "%"));
+            }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
+                command.Parameters.AddRange(parameters.ToArray());
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -142,10 +153,7 @@ namespace BookHaven_Library
             MemberID_txtBox.DataBindings.Clear();
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
+     
 
         public void Update_Member(Member member)
         {
@@ -185,6 +193,15 @@ namespace BookHaven_Library
             }
         }
 
-        
+        private void SearchName_TextChanged(object sender, EventArgs e)
+        {
+
+            LoadData();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
     }
 }

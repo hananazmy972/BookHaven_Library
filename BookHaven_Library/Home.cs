@@ -30,6 +30,11 @@ namespace BookHaven_Library
             borrowings.Show();
             this.Hide();
         }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
