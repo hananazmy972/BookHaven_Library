@@ -108,7 +108,7 @@ namespace BookHaven_Library
                       FROM Borrowing B 
 	                  JOIN Member M ON B.MemberID = M.MemberID
 	                  JOIN Book BK ON B.BookID = BK.BookID
-                      WHERE B.DueDate < GETDATE() AND B.ReturnDate IS NULL";
+                      WHERE B.DueDate < GETDATE() ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))

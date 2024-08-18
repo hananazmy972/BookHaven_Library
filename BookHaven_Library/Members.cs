@@ -105,6 +105,7 @@ namespace BookHaven_Library
 
             return members;
         }
+
         private void MemberGridView_SelectionChanged(object sender, EventArgs e)
         {
             if (MembersGridView.SelectedRows.Count > 0)

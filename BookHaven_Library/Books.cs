@@ -82,7 +82,6 @@ namespace BookHaven_Library
             Av_copies_txtBox.Text = string.Empty;
             id_txtBox.Text = string.Empty;
 
-            // Optionally, clear any additional fields here
         }
 
 
