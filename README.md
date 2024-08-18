@@ -25,7 +25,7 @@ Here's the SQL code used to create the tables in the database:
 
 ```sql
 -- Create Books Table
-CREATE TABLE Books (
+CREATE TABLE Book (
     BookID INT PRIMARY KEY IDENTITY(1,1),
     Title VARCHAR(255) NOT NULL,
     Author VARCHAR(255) NOT NULL,
@@ -38,13 +38,13 @@ CREATE TABLE Books (
 );
 
 -- Create Categories Table
-CREATE TABLE Categories (
+CREATE TABLE Category (
     CategoryID INT PRIMARY KEY IDENTITY(1,1),
     CategoryName VARCHAR(100) NOT NULL
 );
 
 -- Create Members Table
-CREATE TABLE Members (
+CREATE TABLE Member (
     MemberID INT PRIMARY KEY IDENTITY(1,1),
     FirstName VARCHAR(100) NOT NULL,
     LastName VARCHAR(100) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE Members (
 );
 
 -- Create Borrowings Table
-CREATE TABLE Borrowings (
+CREATE TABLE Borrowing (
     BorrowID INT PRIMARY KEY IDENTITY(1,1),
     BookID INT NOT NULL,
     MemberID INT NOT NULL,
