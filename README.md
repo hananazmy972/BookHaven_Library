@@ -2,7 +2,7 @@
 
 ## Overview
 This Library Management System is a desktop application designed to manage books, members, and borrowings within a library. Built using ADO.NET, the system allows for efficient tracking and management of library resources, with functionalities including book and member management, borrowing and returning operations, and overdue tracking. The project emphasizes data integrity, user feedback, and ease of use.
-![Home Page](https://ibb.co/qsHHC3g)
+
 
 ## Project Components
 
