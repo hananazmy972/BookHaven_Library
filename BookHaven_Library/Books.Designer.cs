@@ -248,7 +248,7 @@
             // 
             BookGridView.BackgroundColor = SystemColors.ButtonHighlight;
             BookGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            BookGridView.GridColor = Color.White;
+            BookGridView.GridColor = Color.Black;
             BookGridView.Location = new Point(350, 147);
             BookGridView.Name = "BookGridView";
             BookGridView.RowHeadersWidth = 51;

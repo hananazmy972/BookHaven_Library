@@ -146,7 +146,7 @@
             // 
             BorrowingsGridView.BackgroundColor = SystemColors.ButtonHighlight;
             BorrowingsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            BorrowingsGridView.GridColor = SystemColors.ButtonHighlight;
+            BorrowingsGridView.GridColor = Color.Black;
             BorrowingsGridView.Location = new Point(218, 185);
             BorrowingsGridView.Name = "BorrowingsGridView";
             BorrowingsGridView.RowHeadersWidth = 51;

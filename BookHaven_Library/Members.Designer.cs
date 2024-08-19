@@ -187,6 +187,7 @@
             // 
             MembersGridView.BackgroundColor = SystemColors.HighlightText;
             MembersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            MembersGridView.GridColor = Color.Black;
             MembersGridView.Location = new Point(342, 138);
             MembersGridView.Name = "MembersGridView";
             MembersGridView.RowHeadersWidth = 51;
