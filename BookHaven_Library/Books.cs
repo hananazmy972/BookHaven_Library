@@ -48,13 +48,15 @@ namespace BookHaven_Library
             if (book != null && book.BookID != 0)
             {
                 Update_Book(book);
-              
+             
+
             }
             else
             {
                 MessageBox.Show("Please select a record to update.");
             }
             LoadData();
+            ClearInputs(); // Clear input fields
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -375,7 +377,7 @@ namespace BookHaven_Library
                 MessageBox.Show("ISBN cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
                 return false;
             }
-            if (!int.TryParse(year_txtBox.Text, out int year) || year <= 0)
+            if (!int.TryParse(year_txtBox.Text, out int year) || year <= 0 )
             {
                 MessageBox.Show("Please enter a valid publication year.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                 return false;
