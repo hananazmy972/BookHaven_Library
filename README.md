@@ -100,4 +100,4 @@ CREATE TABLE Borrowing (
 - **Data Validation**: Implemented for all input fields
 
 ## Video Demonstration
-[Project Video Link Here]
+[https://www.youtube.com/watch?v=iGk_DMQ1J7Q]
