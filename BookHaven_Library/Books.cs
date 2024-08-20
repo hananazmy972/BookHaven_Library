@@ -42,6 +42,8 @@ namespace BookHaven_Library
 
         private void ptnUpdate_Click(object sender, EventArgs e)
         {
+            if (!ValidateInput())
+                return;
             Book book = source.Current as Book;
             if (book != null && book.BookID != 0)
             {
@@ -287,8 +289,7 @@ namespace BookHaven_Library
         //Update Book
         public void Update_Book(Book book)
         {
-            if (!ValidateInput())
-                return;
+           
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -308,6 +309,7 @@ namespace BookHaven_Library
 
                     try
                     {
+                        
                         connection.Open();
                         int rows = command.ExecuteNonQuery();
                         MessageBox.Show($"Updated! {rows} row(s) affected.");
@@ -326,6 +328,7 @@ namespace BookHaven_Library
                     }
                 }
             }
+          ;
         }
 
 
@@ -372,7 +375,7 @@ namespace BookHaven_Library
                 MessageBox.Show("ISBN cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
                 return false;
             }
-            if (!int.TryParse(year_txtBox.Text, out int year) || year <= 0 || year > 2024)
+            if (!int.TryParse(year_txtBox.Text, out int year) || year <= 0)
             {
                 MessageBox.Show("Please enter a valid publication year.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                 return false;
